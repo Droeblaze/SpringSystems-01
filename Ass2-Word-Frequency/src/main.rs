@@ -1,31 +1,25 @@
 fn most_frequent_word(text: &str) -> (String, usize) {
     let words: Vec<&str> = text.split_whitespace().collect();
 
-    let mut max_word = String::new();
-    let mut max_count: usize = 0;
+    let mut max_word = "";
+    let mut max_count = 0;
 
-    let mut i: usize = 0;
-    while i < words.len() {
-        let current = words[i];
+    for i in 0..words.len() {
+        let mut count = 0;
 
-        let mut count: usize = 0;
-        let mut j: usize = 0;
-        while j < words.len() {
-            if words[j] == current {
+        for j in 0..words.len() {
+            if words[i] == words[j] {
                 count += 1;
             }
-            j += 1;
         }
 
         if count > max_count {
             max_count = count;
-            max_word = current.to_string();
+            max_word = words[i];
         }
-
-        i += 1;
     }
 
-    (max_word, max_count)
+    (max_word.to_string(), max_count)
 }
 
 fn main() {
