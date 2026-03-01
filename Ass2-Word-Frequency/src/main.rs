@@ -1,27 +1,35 @@
-fn sum_with_step(total: &mut i32, low: i32, high: i32, step: i32) {
-    *total = 0;
+fn most_frequent_word(text: &str) -> (String, usize) {
+    let words: Vec<&str> = text.split_whitespace().collect();
 
-    if step <= 0 {
-        return;
+    let mut max_word = String::new();
+    let mut max_count: usize = 0;
+
+    let mut i: usize = 0;
+    while i < words.len() {
+        let current = words[i];
+
+        let mut count: usize = 0;
+        let mut j: usize = 0;
+        while j < words.len() {
+            if words[j] == current {
+                count += 1;
+            }
+            j += 1;
+        }
+
+        if count > max_count {
+            max_count = count;
+            max_word = current.to_string();
+        }
+
+        i += 1;
     }
 
-    let mut i = low;
-    while i <= high {
-        *total += i;
-        i += step;
-    }
+    (max_word, max_count)
 }
 
 fn main() {
-    let mut result = 0;
-    sum_with_step(&mut result, 0, 100, 1);
-    println!("Sum 0 to 100, step 1: {}", result);
-
-    result = 0;
-    sum_with_step(&mut result, 0, 10, 2);
-    println!("Sum 0 to 10, step 2: {}", result);
-
-    result = 0;
-    sum_with_step(&mut result, 5, 15, 3);
-    println!("Sum 5 to 15, step 3: {}", result);
+    let text = "the quick brown fox jumps over the lazy dog the quick brown fox";
+    let (word, count) = most_frequent_word(text);
+    println!("Most frequent word: \"{}\" ({} times)", word, count);
 }
